@@ -8,10 +8,13 @@ const expected = {
 };
 
 describe('issuanceSupply: 12mil, collateralSupply: 6.6mil, rr: 30%, depositAmount: 600k, no decimals', () => {
-  const startVirtualIssuanceSupply = 120000000n;
-  const startVirtualCollateralSupply = 65120000n;
-  const reserveRatio = 300000n;
-  const depositAmount = 6000000000000000000000000n;
+  const startVirtualIssuanceSupply = 1956421690000000000000000n;
+  // const startVirtualIssuanceSupply = 1956421n;
+  const startVirtualCollateralSupply = 390979310000000000000000n;
+  // const startVirtualCollateralSupply = 390979n;
+  const reserveRatio = 199800n;
+  const depositAmount = 200000000000000000000000n;
+  // const depositAmount = 200000n;
 
   let actual;
 

@@ -1,4 +1,4 @@
-import { createPublicClient, http } from 'viem';
+import { createPublicClient, http, formatEther } from 'viem';
 import { optimismSepolia } from 'viem/chains';
 
 const abi = [
@@ -62,8 +62,10 @@ export const plotCurve = async (
 
   const data = [
     {
-      virtualCollateralSupply: startVirtualCollateralSupply,
-      virtualIssuanceSupply: startVirtualIssuanceSupply,
+      virtualCollateralSupply: formatEther(
+        startVirtualCollateralSupply
+      ),
+      virtualIssuanceSupply: formatEther(startVirtualIssuanceSupply),
       spotPrice: calcSpotPrice(
         startVirtualIssuanceSupply,
         startVirtualCollateralSupply,
@@ -84,9 +86,9 @@ export const plotCurve = async (
     virtualIssuanceSupply += issuance;
 
     data.push({
-      virtualCollateralSupply: virtualCollateralSupply,
-      virtualIssuanceSupply: virtualIssuanceSupply,
-      issuance: issuance,
+      virtualCollateralSupply: formatEther(virtualCollateralSupply),
+      virtualIssuanceSupply: formatEther(virtualIssuanceSupply),
+      issuance: formatEther(issuance),
       spotPrice: calcSpotPrice(
         virtualIssuanceSupply,
         virtualCollateralSupply,
@@ -106,13 +108,10 @@ export const calcSpotPrice = (
   const ratioPct = parseInt(reserveRatio) / 1_000_000;
   const parsedSupply = parseInt(virtualIssuanceSupply);
   const parsedCollateral = parseInt(virtualCollateralSupply);
-  const price = parsedCollateral / (parsedSupply / ratioPct);
+  const price = parsedCollateral / (parsedSupply * ratioPct);
+  console.log(parsedCollateral);
+  console.log(parsedSupply);
+  console.log(ratioPct);
+  console.log(price);
   return price;
 };
-
-// reserve ratio = collateral / (supply * price)
-// price = (collateral) / (supply * ratio)
-
-// const powerFunction =
-//   parseInt(virtualIssuanceSupply) ** (1 / 0.3) /
-//   parseInt(virtualCollateralSupply);
