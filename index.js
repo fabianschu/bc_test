@@ -109,9 +109,5 @@ export const calcSpotPrice = (
   const parsedSupply = parseInt(virtualIssuanceSupply);
   const parsedCollateral = parseInt(virtualCollateralSupply);
   const price = parsedCollateral / (parsedSupply * ratioPct);
-  console.log(parsedCollateral);
-  console.log(parsedSupply);
-  console.log(ratioPct);
-  console.log(price);
   return price;
 };
