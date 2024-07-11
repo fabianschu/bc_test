@@ -74,7 +74,7 @@ export const plotCurve = async (
     },
   ];
 
-  for (let i = 0; i < 5; i++) {
+  for (let i = 1; i < 11; i++) {
     const args = [
       virtualIssuanceSupply,
       virtualCollateralSupply,
@@ -85,15 +85,20 @@ export const plotCurve = async (
     virtualCollateralSupply += depositAmount;
     virtualIssuanceSupply += issuance;
 
+    const spotPrice = calcSpotPrice(
+      virtualIssuanceSupply,
+      virtualCollateralSupply,
+      reserveRatio
+    );
+
     data.push({
       virtualCollateralSupply: formatEther(virtualCollateralSupply),
       virtualIssuanceSupply: formatEther(virtualIssuanceSupply),
       issuance: formatEther(issuance),
-      spotPrice: calcSpotPrice(
-        virtualIssuanceSupply,
-        virtualCollateralSupply,
-        reserveRatio
-      ),
+      spotPrice,
+      depositedAmount: formatEther(depositAmount),
+      relativePriceIncrease:
+        (spotPrice - data[i - 1].spotPrice) / data[i - 1].spotPrice,
     });
   }
 
